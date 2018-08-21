@@ -16,6 +16,7 @@
 		CE212A84212C71DE00D980A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CE212A83212C71DE00D980A1 /* main.m */; };
 		CE212A8E212C71DE00D980A1 /* TruDocPhotosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE212A8D212C71DE00D980A1 /* TruDocPhotosTests.m */; };
 		CE212A99212C71DE00D980A1 /* TruDocPhotosUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE212A98212C71DE00D980A1 /* TruDocPhotosUITests.m */; };
+		CE67605B212C7428006FD4CF /* happiness.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE67605A212C7428006FD4CF /* happiness.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		CE212A94212C71DE00D980A1 /* TruDocPhotosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TruDocPhotosUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE212A98212C71DE00D980A1 /* TruDocPhotosUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TruDocPhotosUITests.m; sourceTree = "<group>"; };
 		CE212A9A212C71DE00D980A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE67605A212C7428006FD4CF /* happiness.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = happiness.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 				CE212A77212C71DC00D980A1 /* Main.storyboard */,
 				CE212A7D212C71DD00D980A1 /* Assets.xcassets */,
 				CE212A7F212C71DD00D980A1 /* LaunchScreen.storyboard */,
+				CE67605A212C7428006FD4CF /* happiness.jpg */,
 				CE212A82212C71DD00D980A1 /* Info.plist */,
 				CE212A83212C71DE00D980A1 /* main.m */,
 				CE212A7A212C71DC00D980A1 /* TruDocPhotos.xcdatamodeld */,
@@ -241,6 +244,7 @@
 				CE212A81212C71DD00D980A1 /* LaunchScreen.storyboard in Resources */,
 				CE212A7E212C71DD00D980A1 /* Assets.xcassets in Resources */,
 				CE212A79212C71DC00D980A1 /* Main.storyboard in Resources */,
+				CE67605B212C7428006FD4CF /* happiness.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
