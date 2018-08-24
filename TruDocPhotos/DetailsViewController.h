@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "Photo.h"
 @interface DetailsViewController : UIViewController
-
+ @property (strong,nonatomic)  Photo* flickrPhoto;
 @end

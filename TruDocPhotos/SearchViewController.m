@@ -7,7 +7,9 @@
 //
 
 #import "SearchViewController.h"
+#import "DetailsViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "UIView+WebCache.h"
 #import "Photo.h"
 @interface SearchViewController ()
 
@@ -15,28 +17,28 @@
 
 @implementation SearchViewController
 {
-    NSMutableArray *tableData;
     NSMutableArray *searchResults;
-    Boolean isFiltered;
+    
 }
 // MARK:  LifeCycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    isFiltered = false;
-    tableData = [[NSMutableArray alloc] init];
+    searchResults = [[NSMutableArray alloc]init];
     self.searchBar.delegate = self;
-    [self fetchPhotos];
 }
 
--(void) fetchPhotos
+-(void) fetchPhotos :(NSString*) searchText
 {
     UIApplication.sharedApplication.networkActivityIndicatorVisible = true;
     NSLog(@"start");
-    NSString *urlString=@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=0ca2227e9fab92643f996050288d96fc&per_page=25&page=1&format=json&nojsoncallback=1&auth_token=72157700534836285-7482246e02afbfb7&api_sig=eaf76345497a52068d292ec50c2002bb";
+    //https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=37e7bee9d9eca6451915a5bb1b2b284f&tags=New e&per_page=10&format=json&nojsoncallback=1
+    NSString  * replacement =  [searchText stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
-    NSURL *url = [NSURL URLWithString:urlString];
-    
+    NSString * escapedSearchText = [replacement stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLHostAllowedCharacterSet];
+    NSString* stringURL = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&tags=%@&per_page=10&format=json&nojsoncallback=1",@"37e7bee9d9eca6451915a5bb1b2b284f", escapedSearchText];
+    NSURL *url = [NSURL URLWithString:stringURL];
+    NSLog(@"stringURL %@",stringURL);
     [[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         NSError *localError = nil;
@@ -46,7 +48,7 @@
             return;
         }
         NSDictionary *results = [parsedObject valueForKey:@"photos"];
-        NSArray * arrayOfPhoto = [results valueForKey:@"photo"];
+        NSMutableArray * arrayOfPhoto = [results valueForKey:@"photo"];
         for (NSDictionary *photoOfJson in arrayOfPhoto) {
             Photo * photo = [[Photo alloc] init];
             [photo setPhotoId:[photoOfJson valueForKey:@"id"]];
@@ -55,11 +57,12 @@
             [photo setSecret:[photoOfJson valueForKey:@"secret"]];
             [photo setServer:[photoOfJson valueForKey:@"server"]];
             NSLog(@" %@",photo.photoId);
-            [self->tableData addObject:photo];
+            [self->searchResults addObject:photo];
         }
-        NSLog(@"tableData.count %lu", (unsigned long)self->tableData.count);
+        NSLog(@"tableData.count %lu", (unsigned long)self->searchResults.count);
         dispatch_async(dispatch_get_main_queue(), ^{
             UIApplication.sharedApplication.networkActivityIndicatorVisible = false;
+            //  [self.tableView reloadData];
             [self.tableView reloadData];
         });
     }] resume];
@@ -83,11 +86,10 @@
 {
     if ([segue.identifier  isEqual: @"PhotoSegue"] )
     {
-        //  DetailsViewController * photoViewController =  segue.destinationViewController
-        
-        //        let selectedIndexPath = tableView.indexPathForSelectedRow
-        //                photoViewController.flickrPhoto = photos[selectedIndexPath!.row]
-        
+        DetailsViewController * photoViewController =  [segue destinationViewController
+                                                        ] ;
+        NSIndexPath* selectedIndexPath = [_tableView indexPathForSelectedRow];
+        [photoViewController setFlickrPhoto:searchResults[selectedIndexPath.row]];
     }
     
 }
@@ -110,58 +112,42 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
+    cell.textLabel.text = [[searchResults objectAtIndex:indexPath.row] title];
+    UIImageView * imageView = [[UIImageView alloc] init];
+    // for larger photo: --  _b
+    NSString* stringURL = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/%@_%@_q.jpg",  [[searchResults objectAtIndex:indexPath.row] farm],[[searchResults objectAtIndex:indexPath.row] server] ,[[searchResults objectAtIndex:indexPath.row] photoId], [[searchResults objectAtIndex:indexPath.row] secret] ];
     
-    if (isFiltered == true){
-        cell.textLabel.text = [[searchResults objectAtIndex:indexPath.row] title];
-        UIImageView * imageView = [[UIImageView alloc] init];
-        // for larger photo: --  _b
-        NSString* stringURL = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/%@_%@_q.jpg",  [[tableData objectAtIndex:indexPath.row] farm],[[tableData objectAtIndex:indexPath.row] server] ,[[tableData objectAtIndex:indexPath.row] photoId], [[tableData objectAtIndex:indexPath.row] secret] ];
-        [imageView sd_setImageWithURL:[NSURL URLWithString:stringURL] placeholderImage:[UIImage imageNamed:@"placeholder.png"] options:SDWebImageHighPriority];        cell.imageView.image = imageView.image;
-
-    } else
-    {
-        cell.textLabel.text = [[tableData objectAtIndex:indexPath.row] title];
-        UIImageView * imageView = [[UIImageView alloc] init];
-        // for larger photo: --  _b 
-        NSString* stringURL = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/%@_%@_q.jpg",  [[tableData objectAtIndex:indexPath.row] farm],[[tableData objectAtIndex:indexPath.row] server] ,[[tableData objectAtIndex:indexPath.row] photoId], [[tableData objectAtIndex:indexPath.row] secret] ];
-        [imageView sd_setImageWithURL:[NSURL URLWithString:stringURL] placeholderImage:[UIImage imageNamed:@"placeholder.png"] options:SDWebImageHighPriority];        cell.imageView.image = imageView.image;
-
-      //  cell.imageView.image = [UIImage imageNamed:@"Image"];
-    }
+    [imageView sd_setShowActivityIndicatorView:true];
+    [imageView sd_setIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [imageView sd_setImageWithURL: [NSURL URLWithString:stringURL]];
+    
+    //    [imageView sd_setImageWithURL:[NSURL URLWithString:stringURL] placeholderImage:[UIImage imageNamed:@"placeholder.png"] options:SDWebImageHighPriority];
+    cell.imageView.image = imageView.image;
+    
     return cell;
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (isFiltered == true)
-    {
-        return [searchResults count];
-    }
-    return [tableData count];
+    return [searchResults count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 150.;
 }
 // MARK:  searchBar
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    if (searchText.length == 0)
+    if ([searchBar text].length == 0)
     {
-        isFiltered = false;
     }
     else
     {
-        isFiltered = true;
-        searchResults = [[NSMutableArray alloc]init];
-        for (Photo *photo in tableData ) {
-            NSRange dataRange = [[photo title] rangeOfString:searchText options:NSCaseInsensitiveSearch];
-            if (dataRange.location != NSNotFound)
-            {
-                [searchResults addObject:photo];
-            }
-        }
+        [searchBar resignFirstResponder];
+        [searchResults removeAllObjects];
+        [self fetchPhotos:[searchBar text]];
     }
-    [self.tableView reloadData];
+    
+    
 }
+
 
 @end
