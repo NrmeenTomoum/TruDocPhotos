@@ -11,6 +11,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIView+WebCache.h"
 #import "Photo.h"
+#import "Constant.h"
 @interface SearchViewController ()
 
 @end
@@ -32,11 +33,10 @@
 {
     UIApplication.sharedApplication.networkActivityIndicatorVisible = true;
     NSLog(@"start");
-    //https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=37e7bee9d9eca6451915a5bb1b2b284f&tags=New e&per_page=10&format=json&nojsoncallback=1
     NSString  * replacement =  [searchText stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
     NSString * escapedSearchText = [replacement stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLHostAllowedCharacterSet];
-    NSString* stringURL = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&tags=%@&per_page=10&format=json&nojsoncallback=1",@"37e7bee9d9eca6451915a5bb1b2b284f", escapedSearchText];
+    NSString* stringURL = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&tags=%@&per_page=10&format=json&nojsoncallback=1",SERVICE_APIKEY_URL, escapedSearchText];
     NSURL *url = [NSURL URLWithString:stringURL];
     NSLog(@"stringURL %@",stringURL);
     [[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -72,15 +72,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-// MARK - Segue
-//override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//    if segue.identifier == "PhotoSegue" {
-//        let photoViewController = segue.destination as! PhotoViewController
-//        let selectedIndexPath = tableView.indexPathForSelectedRow
-//        photoViewController.flickrPhoto = photos[selectedIndexPath!.row]
-//    }
-//
-//}
+// MARK: - Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -109,21 +101,15 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
-    }
     cell.textLabel.text = [[searchResults objectAtIndex:indexPath.row] title];
     UIImageView * imageView = [[UIImageView alloc] init];
-    // for larger photo: --  _b
     NSString* stringURL = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/%@_%@_q.jpg",  [[searchResults objectAtIndex:indexPath.row] farm],[[searchResults objectAtIndex:indexPath.row] server] ,[[searchResults objectAtIndex:indexPath.row] photoId], [[searchResults objectAtIndex:indexPath.row] secret] ];
-    
-    [imageView sd_setShowActivityIndicatorView:true];
-    [imageView sd_setIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [imageView sd_setImageWithURL: [NSURL URLWithString:stringURL]];
-    
-    //    [imageView sd_setImageWithURL:[NSURL URLWithString:stringURL] placeholderImage:[UIImage imageNamed:@"placeholder.png"] options:SDWebImageHighPriority];
-    cell.imageView.image = imageView.image;
-    
+    UIActivityIndicatorView* loader = [cell viewWithTag:100];
+    [loader startAnimating];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:stringURL] placeholderImage:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        cell.imageView.image = imageView.image;
+        [loader stopAnimating];
+    }];
     return cell;
 }
 
@@ -145,8 +131,6 @@
         [searchResults removeAllObjects];
         [self fetchPhotos:[searchBar text]];
     }
-    
-    
 }
 
 

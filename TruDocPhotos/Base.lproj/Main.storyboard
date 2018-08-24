@@ -45,17 +45,22 @@
                                                         <constraint firstAttribute="width" secondItem="mOd-gy-fpk" secondAttribute="height" id="tnT-rq-gZi"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4pK-Ye-bPf">
-                                                    <rect key="frame" x="125.5" y="75" width="200.5" height="0.0"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4pK-Ye-bPf">
+                                                    <rect key="frame" x="126" y="75" width="200" height="0.0"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <activityIndicatorView opaque="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="LcS-uV-o2y">
+                                                    <rect key="frame" x="56" y="65" width="20" height="20"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="4pK-Ye-bPf" firstAttribute="centerY" secondItem="W3x-4Q-oBk" secondAttribute="centerY" id="6Kq-kh-9U0"/>
                                                 <constraint firstItem="mOd-gy-fpk" firstAttribute="width" secondItem="W3x-4Q-oBk" secondAttribute="width" multiplier="0.3" id="6P0-sQ-vm7"/>
+                                                <constraint firstItem="LcS-uV-o2y" firstAttribute="centerY" secondItem="mOd-gy-fpk" secondAttribute="centerY" id="7vW-zQ-iDX"/>
                                                 <constraint firstItem="mOd-gy-fpk" firstAttribute="leading" secondItem="W3x-4Q-oBk" secondAttribute="leadingMargin" id="Bo6-N4-tu4"/>
+                                                <constraint firstItem="LcS-uV-o2y" firstAttribute="centerX" secondItem="mOd-gy-fpk" secondAttribute="centerX" id="H3g-OD-V6f"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="4pK-Ye-bPf" secondAttribute="trailing" constant="8" id="kLQ-9h-TUt"/>
                                                 <constraint firstItem="mOd-gy-fpk" firstAttribute="centerY" secondItem="W3x-4Q-oBk" secondAttribute="centerY" id="vW1-La-COc"/>
                                                 <constraint firstItem="4pK-Ye-bPf" firstAttribute="leading" secondItem="mOd-gy-fpk" secondAttribute="trailing" constant="8" id="zxk-Tb-f6U"/>
@@ -113,11 +118,16 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Ts3-ED-ghv">
+                                <rect key="frame" x="177" y="323.5" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="QXl-16-xjj" firstAttribute="trailing" secondItem="Wqj-qD-ht7" secondAttribute="trailing" constant="16" id="59R-i0-tNk"/>
+                            <constraint firstItem="Ts3-ED-ghv" firstAttribute="centerY" secondItem="lhF-2j-gUj" secondAttribute="centerY" id="BkS-bC-8lx"/>
                             <constraint firstItem="Wqj-qD-ht7" firstAttribute="leading" secondItem="QXl-16-xjj" secondAttribute="leading" constant="16" id="Fpp-WT-2x8"/>
+                            <constraint firstItem="Ts3-ED-ghv" firstAttribute="centerX" secondItem="lhF-2j-gUj" secondAttribute="centerX" id="IBe-a7-HKH"/>
                             <constraint firstItem="QXl-16-xjj" firstAttribute="trailing" secondItem="V1t-wU-JAY" secondAttribute="trailing" constant="16" id="MYU-cN-Dy0"/>
                             <constraint firstItem="V1t-wU-JAY" firstAttribute="leading" secondItem="QXl-16-xjj" secondAttribute="leading" constant="16" id="ZNo-d5-nYl"/>
                             <constraint firstItem="V1t-wU-JAY" firstAttribute="top" secondItem="Wqj-qD-ht7" secondAttribute="bottom" constant="8" id="bgG-Gs-O9M"/>
@@ -130,6 +140,7 @@
                     <connections>
                         <outlet property="descriptionOfPhoto" destination="V1t-wU-JAY" id="raY-Mp-hpL"/>
                         <outlet property="imageOfLargePhoto" destination="Wqj-qD-ht7" id="jxU-HK-CHa"/>
+                        <outlet property="loader" destination="Ts3-ED-ghv" id="KwK-L6-YPj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FI0-sl-coG" userLabel="First Responder" sceneMemberID="firstResponder"/>
