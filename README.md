@@ -19,7 +19,8 @@ Photos are retrieved by hitting the [Flickr API](https://www.flickr.com/services
 - Response object is the Description about photo.
 
 We use the farm, server, id, and secret to get Larger  image path.
-- Image Path: https://farmFARM.staticflickr.com/SERVER/ID_SECRET_b.jpg
-- Response object is the image file
+
+- Image Path:"https://farmFARM.staticflickr.com/SERVER/PHOTOIDSERVER.jpg",  [_flickrPhoto farm],[_flickrPhoto server] ,[_flickrPhoto photoId], [_flickrPhoto secret]
+- Response object  contain larger photo.
 
 
