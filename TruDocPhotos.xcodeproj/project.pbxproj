@@ -20,6 +20,7 @@
 		CE212A8E212C71DE00D980A1 /* TruDocPhotosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE212A8D212C71DE00D980A1 /* TruDocPhotosTests.m */; };
 		CE212A99212C71DE00D980A1 /* TruDocPhotosUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE212A98212C71DE00D980A1 /* TruDocPhotosUITests.m */; };
 		CE2322A521307FBE00683F56 /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2322A421307FBE00683F56 /* Constant.m */; };
+		CE2322A82130CCCC00683F56 /* FlickrTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2322A72130CCCC00683F56 /* FlickrTableViewCell.m */; };
 		CE67605B212C7428006FD4CF /* happiness.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE67605A212C7428006FD4CF /* happiness.jpg */; };
 		CECBAF7D212EE2AA00FAF632 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CECBAF7C212EE2AA00FAF632 /* DetailsViewController.m */; };
 		CECBAF84212F3B8F00FAF632 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = CECBAF83212F3B8F00FAF632 /* Photo.m */; };
@@ -70,6 +71,8 @@
 		CE212A9A212C71DE00D980A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE2322A321307FBE00683F56 /* Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		CE2322A421307FBE00683F56 /* Constant.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Constant.m; sourceTree = "<group>"; };
+		CE2322A62130CCCC00683F56 /* FlickrTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlickrTableViewCell.h; sourceTree = "<group>"; };
+		CE2322A72130CCCC00683F56 /* FlickrTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlickrTableViewCell.m; sourceTree = "<group>"; };
 		CE67605A212C7428006FD4CF /* happiness.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = happiness.jpg; sourceTree = "<group>"; };
 		CECBAF7B212EE2AA00FAF632 /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		CECBAF7C212EE2AA00FAF632 /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
@@ -171,6 +174,8 @@
 				CECBAF83212F3B8F00FAF632 /* Photo.m */,
 				CE2322A321307FBE00683F56 /* Constant.h */,
 				CE2322A421307FBE00683F56 /* Constant.m */,
+				CE2322A62130CCCC00683F56 /* FlickrTableViewCell.h */,
+				CE2322A72130CCCC00683F56 /* FlickrTableViewCell.m */,
 			);
 			path = TruDocPhotos;
 			sourceTree = "<group>";
@@ -390,6 +395,7 @@
 				CE212A73212C71DC00D980A1 /* AppDelegate.m in Sources */,
 				CE212A84212C71DE00D980A1 /* main.m in Sources */,
 				CECBAF7D212EE2AA00FAF632 /* DetailsViewController.m in Sources */,
+				CE2322A82130CCCC00683F56 /* FlickrTableViewCell.m in Sources */,
 				CE212A7C212C71DC00D980A1 /* TruDocPhotos.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

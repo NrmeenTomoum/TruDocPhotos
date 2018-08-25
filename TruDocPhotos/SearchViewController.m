@@ -12,31 +12,37 @@
 #import "UIView+WebCache.h"
 #import "Photo.h"
 #import "Constant.h"
+#import "FlickrTableViewCell.h"
 @interface SearchViewController ()
-
+{
+    NSMutableArray *searchResults;
+NSString* searchText;
+int currentPage  ;
+int lastPage ;
+}
 @end
 
 @implementation SearchViewController
-{
-    NSMutableArray *searchResults;
-    
-}
+
+
+
 // MARK:  LifeCycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    currentPage = 1;
     searchResults = [[NSMutableArray alloc]init];
     self.searchBar.delegate = self;
 }
 
--(void) fetchPhotos :(NSString*) searchText
+-(void) fetchPhotos :(NSString*) searchText :(int)page
 {
     UIApplication.sharedApplication.networkActivityIndicatorVisible = true;
     NSLog(@"start");
     NSString  * replacement =  [searchText stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
     NSString * escapedSearchText = [replacement stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLHostAllowedCharacterSet];
-    NSString* stringURL = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&tags=%@&per_page=10&format=json&nojsoncallback=1",SERVICE_APIKEY_URL, escapedSearchText];
+    NSString* stringURL = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&tags=%@&per_page=10&page=%d&format=json&nojsoncallback=1",SERVICE_APIKEY_URL, escapedSearchText,page];
     NSURL *url = [NSURL URLWithString:stringURL];
     NSLog(@"stringURL %@",stringURL);
     [[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -63,6 +69,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             UIApplication.sharedApplication.networkActivityIndicatorVisible = false;
             //  [self.tableView reloadData];
+            self->lastPage  =  (int)self->searchResults.count ;
             [self.tableView reloadData];
         });
     }] resume];
@@ -97,19 +104,21 @@
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
-    static NSString *simpleTableIdentifier = @"cell";
+    static NSString *simpleTableIdentifier = @"FlickrTableViewCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
-    
-    cell.textLabel.text = [[searchResults objectAtIndex:indexPath.row] title];
+    FlickrTableViewCell  *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+     [[cell title] setText:[[searchResults objectAtIndex:indexPath.row] title]];
+  
     UIImageView * imageView = [[UIImageView alloc] init];
     NSString* stringURL = [NSString stringWithFormat:@"https://farm%@.staticflickr.com/%@/%@_%@_q.jpg",  [[searchResults objectAtIndex:indexPath.row] farm],[[searchResults objectAtIndex:indexPath.row] server] ,[[searchResults objectAtIndex:indexPath.row] photoId], [[searchResults objectAtIndex:indexPath.row] secret] ];
     UIActivityIndicatorView* loader = [cell viewWithTag:100];
     [loader startAnimating];
+    
     [imageView sd_setImageWithURL:[NSURL URLWithString:stringURL] placeholderImage:nil completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-        cell.imageView.image = imageView.image;
-        [loader stopAnimating];
+          [[cell image] setImage:imageView.image];
+     [loader stopAnimating];
     }];
+   
     return cell;
 }
 
@@ -127,11 +136,25 @@
     }
     else
     {
+        searchText = [searchBar text];
         [searchBar resignFirstResponder];
         [searchResults removeAllObjects];
-        [self fetchPhotos:[searchBar text]];
+        [self fetchPhotos:[searchBar text]:1];
     }
 }
 
-
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    float currentOffset = scrollView.contentOffset.y;
+    float maximumOffset = scrollView.contentSize.height;
+    if (currentOffset > maximumOffset - scrollView.frame.size.height) {
+           // if (currentPage == lastPage) {
+                if (searchText != NULL) {
+                     currentPage +=1;
+                      [self fetchPhotos:searchText:currentPage];
+             //       }
+            }
+    
+}
+}
 @end
