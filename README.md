@@ -1,7 +1,12 @@
 # TruDocPhotos
 
-
 This application is an example of searching the Flickr API for photos in Objective-c
+
+### Getting Started
+
+- Clone the repo and   install  pod 'SDWebImage'.  
+- run TruDocPhotos.xcworkspace
+
 ### The Flickr API
 reference https://www.flickr.com/services/api/ 
 
