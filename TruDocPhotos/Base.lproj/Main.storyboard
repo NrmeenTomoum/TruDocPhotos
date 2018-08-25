@@ -50,7 +50,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </activityIndicatorView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PJ3-Dr-ZuW">
-                                                    <rect key="frame" x="136" y="64" width="198" height="21"/>
+                                                    <rect key="frame" x="136" y="0.0" width="198" height="150"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -59,9 +59,11 @@
                                             <constraints>
                                                 <constraint firstItem="PJ3-Dr-ZuW" firstAttribute="centerY" secondItem="wf7-Gb-lPb" secondAttribute="centerY" id="5iF-To-qtP"/>
                                                 <constraint firstItem="PJ3-Dr-ZuW" firstAttribute="leading" secondItem="fmG-bV-QH4" secondAttribute="trailing" constant="8" id="Cj5-Y5-Mm9"/>
+                                                <constraint firstAttribute="bottom" secondItem="PJ3-Dr-ZuW" secondAttribute="bottom" id="IH2-Dn-brY"/>
                                                 <constraint firstItem="PJ3-Dr-ZuW" firstAttribute="trailing" secondItem="wf7-Gb-lPb" secondAttribute="trailingMargin" id="Mx8-O1-VOp"/>
                                                 <constraint firstItem="fmG-bV-QH4" firstAttribute="leading" secondItem="wf7-Gb-lPb" secondAttribute="leading" constant="8" id="YWd-ua-33e"/>
                                                 <constraint firstItem="fmG-bV-QH4" firstAttribute="centerY" secondItem="wf7-Gb-lPb" secondAttribute="centerY" id="a8c-Zb-2yk"/>
+                                                <constraint firstItem="PJ3-Dr-ZuW" firstAttribute="top" secondItem="wf7-Gb-lPb" secondAttribute="top" id="c40-m4-MU3"/>
                                                 <constraint firstItem="fmG-bV-QH4" firstAttribute="width" secondItem="wf7-Gb-lPb" secondAttribute="width" multiplier="0.35" id="l9P-iD-Egr"/>
                                             </constraints>
                                         </tableViewCellContentView>

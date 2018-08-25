@@ -31,6 +31,7 @@
         [imageView sd_setShowActivityIndicatorView:false];
         self.imageOfLargePhoto.image = imageView.image;
         [self->_loader stopAnimating];
+        [self->_loader setHidden:YES];
     }];
     [self getInfoOfPhoto];
 }
